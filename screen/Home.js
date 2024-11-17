@@ -9,6 +9,8 @@ import {
   FlatList,
   Image,
   Dimensions,
+  Modal,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -63,51 +65,51 @@ const foodData = [
   },
   {
     id: "9",
-    name: "Salmon",
-    image: require("../assets/img/salmon.jpg"),
-    category: "Seafood",
+    name: "Pizza",
+    image: require("../assets/img/pizza.jpg"),
+    category: "Fastfood",
   },
   {
     id: "10",
-    name: "Shrimp",
-    image: require("../assets/img/shrimp.jpg"),
-    category: "Seafood",
+    name: "Double Hamburger",
+    image: require("../assets/img/doubleBurger.jpg"),
+    category: "Fastfood",
   },
   {
     id: "11",
-    name: "Crab",
-    image: require("../assets/img/crab.jpg"),
-    category: "Seafood",
+    name: "Bacon Dogs",
+    image: require("../assets/img/bacondogs.jpg"),
+    category: "Fastfood",
   },
   {
     id: "12",
-    name: "Lobster",
-    image: require("../assets/img/lobster.jpg"),
-    category: "Seafood",
+    name: "Sandwich",
+    image: require("../assets/img/sandwich.jpg"),
+    category: "Fastfood",
   },
   {
     id: "13",
-    name: "Oyster",
-    image: require("../assets/img/oyster.jpg"),
-    category: "Seafood",
+    name: "Chicken Fries",
+    image: require("../assets/img/chicken.jpg"),
+    category: "Fastfood",
   },
   {
     id: "14",
-    name: "Clam",
-    image: require("../assets/img/clam.jpg"),
-    category: "Seafood",
+    name: "Hamburger",
+    image: require("../assets/img/hamburger.jpg"),
+    category: "Fastfood",
   },
   {
     id: "15",
-    name: "Squid",
-    image: require("../assets/img/squid.jpg"),
-    category: "Seafood",
+    name: "French Fries",
+    image: require("../assets/img/fries.jpg"),
+    category: "Fastfood",
   },
   {
     id: "16",
-    name: "Scallop",
-    image: require("../assets/img/scallop.jpg"),
-    category: "Seafood",
+    name: "Spaghetti",
+    image: require("../assets/img/spagetti.jpg"),
+    category: "Fastfood",
   },
   {
     id: "17",
@@ -157,10 +159,61 @@ const foodData = [
     image: require("../assets/img/beer.jpg"),
     category: "Drinks",
   },
+  {
+    id: "25",
+    name: "Combo 1",
+    image: require("../assets/img/combo1.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "26",
+    name: "Combo 2",
+    image: require("../assets/img/combo2.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "27",
+    name: "Combo 3",
+    image: require("../assets/img/combo3.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "28",
+    name: "Combo 4",
+    image: require("../assets/img/combo4.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "29",
+    name: "Combo 5",
+    image: require("../assets/img/combo5.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "30",
+    name: "Combo 6",
+    image: require("../assets/img/combo6.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "31",
+    name: "Combo 7",
+    image: require("../assets/img/combo7.jpg"),
+    category: "Combo",
+  },
+  {
+    id: "32",
+    name: "Combo 8",
+    image: require("../assets/img/combo8.jpg"),
+    category: "Combo",
+  },
 ];
-
+const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState("Vegetable");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  
   const filteredData =
     selectedCategory === "All"
       ? foodData
@@ -168,60 +221,58 @@ const Home = () => {
 
   const navigation = useNavigation();
 
-  const Login = () => {
+  const handleLogin = () => {
     navigation.navigate("Login");
   };
-  const Basket = () => {
+  const handleBasket = () => {
     navigation.navigate("Basket");
   };
 
   const renderFoodItem = ({ item }) => (
-    <View style={styles.foodItem}>
+    <TouchableOpacity
+      style={styles.foodItem}
+      onPress={() => {
+        setSelectedItem(item);
+        setModalVisible(true);
+      }}
+    >
       <Image source={item.image} style={styles.foodImage} />
       <Text style={styles.foodName}>{item.name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <TouchableOpacity style={styles.backIcon}>
-          <AntDesign name="arrowleft" size={40} color="black" onPress={Login} />
+        <TouchableOpacity onPress={handleLogin} style={styles.backIcon}>
+          <AntDesign name="arrowleft" size={24} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.cartIcon}>
-          <AntDesign
-            name="shoppingcart"
-            size={40}
-            color="black"
-            onPress={Basket}
-          />
+        <Text style={styles.header}>Food Case</Text>
+        <TouchableOpacity onPress={handleBasket} style={styles.cartIcon}>
+          <AntDesign name="shoppingcart" size={24} color="black" />
         </TouchableOpacity>
       </View>
-
-      <View style={styles.header}>
-        <View style={styles.searchBox}>
-          <TextInput
-            style={styles.searchInput}
-            placeholder="Search"
-            placeholderTextColor="#888"
-            fontSize={16}
-          />
-        </View>
-        <View style={styles.categoryContainer}>
-          {["Vegetable", "Seafood", "Drinks"].map((category) => (
-            <TouchableOpacity
-              key={category}
-              style={[
-                styles.categoryButton,
-                selectedCategory === category && styles.selectedCategoryButton,
-              ]}
-              onPress={() => setSelectedCategory(category)}
-            >
-              <Text style={styles.categoryText}>{category}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
+      <View style={styles.bannerContainer}>
+        <Image
+          source={require("../assets/img/sale1.jpg")}
+          style={styles.bannerImage}
+        />
       </View>
+      <View style={styles.categoryContainer}>
+        {["Vegetable", "Fastfood", "Drinks", "Combo"].map((category) => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.categoryButton,
+              selectedCategory === category && styles.selectedCategoryButton,
+            ]}
+            onPress={() => setSelectedCategory(category)}
+          >
+            <Text style={styles.categoryText}>{category}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      {/* ------------------------------------------------------------------------------------ */}
       <View style={styles.body}>
         <Text style={styles.titleText}>Order your favorite!</Text>
         <TouchableOpacity onPress={() => setSelectedCategory("All")}>
@@ -233,38 +284,63 @@ const Home = () => {
         data={filteredData}
         renderItem={renderFoodItem}
         keyExtractor={(item) => item.id}
-        numColumns={2}
+        numColumns={1}
         contentContainerStyle={styles.flatListContent}
         showsVerticalScrollIndicator={false}
         style={{ flex: 1, marginTop: 20 }}
       />
-      <View style={styles.footer}>
-  <TouchableOpacity style={styles.footerItem}>
-    <AntDesign name="message1" size={35} />
-    <Text style={styles.footerText}>Tin nhắn</Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.footerItem}>
-    <AntDesign name="bells" size={35} />
-    <Text style={styles.footerText}>Thông báo</Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.footerItem}>
-    <AntDesign name="home" size={35} />
-    <Text style={styles.footerText}>Trang chủ</Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.footerItem}>
-    <AntDesign name="user" size={35} />
-    <Text style={styles.footerText}>Tài khoản</Text>
-  </TouchableOpacity>
-  <TouchableOpacity style={styles.footerItem}>
-    <AntDesign name="setting" size={35} />
-    <Text style={styles.footerText}>Cài đặt</Text>
-  </TouchableOpacity>
-</View>
 
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              {selectedItem && (
+                <>
+                  <Image
+                    source={selectedItem.image}
+                    style={styles.modalImage}
+                  />
+                  <Text style={styles.modalName}>{selectedItem.name}</Text>
+                  <Text style={styles.modalCategory}>
+                    {selectedItem.category}
+                  </Text>
+                </>
+              )}
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
+      {/* ------------------------------------------------------------------------------------ */}
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="message1" size={24} color="black" />
+          <Text style={styles.footerText}>Tin nhắn</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="bells" size={24} color="black" />
+          <Text style={styles.footerText}>Thông báo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="home" size={24} color="black" />
+          <Text style={styles.footerText}>Trang chủ</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="user" size={24} color="black" />
+          <Text style={styles.footerText}>Tài khoản</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="setting" size={24} color="black" />
+          <Text style={styles.footerText}>Cài đặt</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -296,9 +372,18 @@ const styles = StyleSheet.create({
     width: "90%",
     marginBottom: 10,
   },
+  bannerContainer: {
+    height: screenHeight * 0.35, // 35% chiều cao màn hình
+  },
+  bannerImage: {
+    width: "100%",
+    height: "100%",
+    resizeMode: "cover",
+  },
   categoryContainer: {
     flexDirection: "row",
-    marginTop: 30,
+    marginTop: 40,
+    justifyContent: "center",
   },
   categoryButton: {
     borderWidth: 1,
@@ -320,13 +405,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#9C9C9C",
   },
   body: {
-    marginTop: 30,
+    marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     width: "90%",
     alignSelf: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   titleText: {
     fontSize: 18,
@@ -340,7 +425,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   foodItem: {
-    flex: 1,
+    flexDirection: "row",
     alignItems: "center",
     margin: 8,
     padding: 10,
@@ -350,30 +435,58 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
   },
   foodImage: {
-    width: "100%",
-    height: 170,
+    width: 100,
+    height: 100,
     borderRadius: 8,
-    marginBottom: 5,
+    marginRight: 10,
   },
   foodName: {
     fontSize: 14,
     fontWeight: "bold",
-    textAlign: "center",
+    flex: 1,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "90%",
+    height: "60%",
+    backgroundColor: "white",
+    borderRadius: 8,
+    padding: 20,
+    alignItems: "center",
+  },
+  modalImage: {
+    width: "45%",
+    height: 170,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  modalName: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  modalCategory: {
+    fontSize: 16,
+    color: "grey",
   },
   footer: {
     flexDirection: "row",
     justifyContent: "space-around",
     backgroundColor: "white",
     height: "10%",
-    alignItems: "center", // Căn giữa theo chiều dọc
+    alignItems: "center",
   },
   footerItem: {
-    alignItems: "center", // Căn giữa theo chiều ngang
+    alignItems: "center",
   },
   footerText: {
-    fontSize: 12, // Kích thước chữ phù hợp với icon
-    marginTop: 4, // Khoảng cách giữa icon và chữ
-  }
-  
+    fontSize: 12,
+    marginTop: 4,
+  },
 });
 export default Home;
