@@ -20,7 +20,7 @@ const Basket = () => {
         <TouchableOpacity onPress={scr02} style={styles.backButton}>
           <AntDesign name="arrowleft" size={40} color={"black"} />
         </TouchableOpacity>
-        <Text style={styles.headerText}>My Baskettttt</Text>
+        <Text style={styles.headerText}>My Basket</Text>
       </View>
       <View style={styles.body}>
         {/* Đây là nơi bạn sẽ đặt FlatList */}
