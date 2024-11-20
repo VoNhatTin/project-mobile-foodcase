@@ -13,6 +13,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import Carousel from "../components/Carousel";
 
 const foodData = [
   {
@@ -227,6 +228,9 @@ const Home = () => {
   const handleBasket = () => {
     navigation.navigate("Basket");
   };
+  const goToNotifications = () => {
+    navigation.navigate("Notification");
+  };
 
   const renderFoodItem = ({ item }) => (
     <TouchableOpacity
@@ -252,12 +256,9 @@ const Home = () => {
           <AntDesign name="shoppingcart" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={styles.bannerContainer}>
-        <Image
-          source={require("../assets/img/sale1.jpg")}
-          style={styles.bannerImage}
-        />
-      </View>
+      <View>
+				<Carousel />
+		</View>
       <View style={styles.categoryContainer}>
         {["Vegetable", "Fastfood", "Drinks", "Combo"].map((category) => (
           <TouchableOpacity
@@ -321,7 +322,7 @@ const Home = () => {
           <AntDesign name="message1" size={24} color="black" />
           <Text style={styles.footerText}>Tin nhắn</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.footerItem}>
+        <TouchableOpacity style={styles.footerItem} onPress={goToNotifications}>
           <AntDesign name="bells" size={24} color="black" />
           <Text style={styles.footerText}>Thông báo</Text>
         </TouchableOpacity>
