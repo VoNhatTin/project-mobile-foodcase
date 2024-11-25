@@ -14,10 +14,6 @@ const notificationData = [
 const Notification = () => {
   const navigation = useNavigation();
 
-  const scr02 = () => {
-    navigation.navigate("Home");
-  };
-
   const renderItem = ({ item }) => (
     <View style={styles.notificationContainer}>
       <Image source={item.icon} style={styles.notificationIcon} />
@@ -40,6 +36,24 @@ const Notification = () => {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
         />
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerItem} onPress={() => navigation.navigate("Message")}>
+          <AntDesign name="message1" size={24} color="black" />
+          <Text style={styles.footerText} >Tin nhắn</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem} onPress={() => navigation.navigate("Home")}>
+          <AntDesign name="home" size={24} color="black" />
+          <Text style={styles.footerText} >Trang chủ</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem} onPress={() => navigation.navigate("Account")}>
+          <AntDesign name="user" size={24} color="black" />
+          <Text style={styles.footerText}>Tài khoản</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.footerItem}>
+          <AntDesign name="setting" size={24} color="black" />
+          <Text style={styles.footerText} onPress={() => navigation.navigate("Settings")}>Cài đặt</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -105,6 +119,20 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     marginLeft: 10,
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "white",
+    height: "10%",
+    alignItems: "center",
+  },
+  footerItem: {
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 12,
+    marginTop: 4,
   },
 });
 
