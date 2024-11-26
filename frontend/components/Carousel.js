@@ -43,15 +43,15 @@ const Carousel = () => {
 	// Data for carousel
 	const carouselData = [
 		{
-			id: "01",
+			id: "0111111111",
 			image: require("../assets/img/sale1.jpg"),
 		},
 		{
-			id: "02",
+			id: "0222222222",
 			image: require("../assets/img/sale2.jpg"),
 		},
 		{
-			id: "03",
+			id: "0333333333",
 			image: require("../assets/img/sale4.jpg"),
 		},
 	];
@@ -72,12 +72,11 @@ const Carousel = () => {
 	const handleScroll = (event) => {
 		// Get the scroll position
 		const scrollPosition = event.nativeEvent.contentOffset.x;
-		console.log({ scrollPosition });
+	
 		// Get the index of current active item
 
 		const index = scrollPosition / screenWidth;
 
-		console.log({ index });
 		// Update the index
 
 		setActiveIndex(index);
